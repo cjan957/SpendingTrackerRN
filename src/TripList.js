@@ -8,37 +8,30 @@ export default class TripList extends React.Component {
       super(props);
       this.state = {
           username: 'chanokuporu',
-          tripList: []
+          tripNameList: []   
       }
-      this.getTripListByUsername = this.getTripListByUsername.bind(this);
   }
 
   componentDidMount(){
-      this.getTripListByUsername();
+      db.collection(this.state.username).onSnapshot(this.onCollectionUpdate);
   }
 
-   getTripListByUsername(){
-      var tripRef = db.collection(this.state.username);
-
-      tripRef.get().then(function(doc){
-          if(doc.exists){
-            console.log("Trip List:", doc.data());
-            this.state.tripList = doc.data();
-          }
-          else{
-            console.log("No Trips. Get your arse out a bit more!")
-          }
-      }).catch(function(error){
-          console.log("Error getting data....", error);
-      });
-
+  onCollectionUpdate = (querySnapshot) => {
+    const tripNameList = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      tripNameList.push(data.TripName)
+    });
+    this.setState({
+      tripNameList
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>TripList Page</Text>
-        <Text>{this.state.tripList}</Text>
+        <Text>{this.state.tripNameList}</Text>
       </View>
     );
   }
