@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { db } from './config';
 
+
 export default class TripList extends React.Component {
 
   constructor(props){
@@ -29,19 +30,36 @@ export default class TripList extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>TripList Page</Text>
-        <Text>{this.state.tripNameList}</Text>
+        <View style={styles.MainView}>
+          <View style={styles.TopGreetings}>
+            <Text style={styles.greetings}>Welcome, {this.state.username} </Text>
+          </View>
+          <View style={styles.MiddleTripList}>
+
+          </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  MainView: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+  },
+  TopGreetings: {
+    flex: 1,
+    backgroundColor: 'skyblue',
+    
+  },
+  MiddleTripList: {
+    flex: 4,
+    backgroundColor: 'white'
+  },
+  greetings: {
+    fontSize: 30,
+    color: 'white'
   },
 });
