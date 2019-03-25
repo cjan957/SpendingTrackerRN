@@ -1,7 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ListItem } from 'react-native';
 import { db } from './config';
 
+class MyListItem extends React.PureComponent {
+  _onPress = () => {
+    this.props.onPressItem(this.props.id);
+  };
+
+  render() {
+    const textColor = this.props.selected ? 'red' : 'black';
+    return (
+      <TouchableOpacity onPress={this._onPress}>
+        <View>
+          <Text style={{color: textColor}}>{this.props.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 export default class TripList extends React.Component {
 
@@ -9,8 +25,9 @@ export default class TripList extends React.Component {
       super(props);
       this.state = {
           username: 'chanokuporu',
-          tripNameList: []   
+          tripNameList: []
       }
+
   }
 
   componentDidMount(){
@@ -21,11 +38,13 @@ export default class TripList extends React.Component {
     const tripNameList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      tripNameList.push(data.TripName)
+      var trip = {id: data.TripID, name: data.TripName};
+      tripNameList.push(trip)
     });
     this.setState({
       tripNameList
     })
+    console.log(tripNameList);
   }
 
   render() {
@@ -35,12 +54,21 @@ export default class TripList extends React.Component {
             <Text style={styles.greetings}>Welcome, {this.state.username} </Text>
           </View>
           <View style={styles.MiddleTripList}>
-
+            <FlatList
+              data={this.state.tripNameList}
+              renderItem = {({item}) => (
+                <View >
+                  <Text>{item.name}</Text>
+                  <Text>{item.id}</Text>
+                </View>
+              )}
+            />
           </View>
-      </View>
+      </View> 
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   MainView: {
@@ -56,10 +84,24 @@ const styles = StyleSheet.create({
   },
   MiddleTripList: {
     flex: 4,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   greetings: {
     fontSize: 30,
     color: 'white'
   },
+  name: {
+    fontFamily: 'Verdana',
+    fontSize: 18
+  },
+  email: {
+    color: 'red'
+  },
+  flatview: {
+    justifyContent: 'center',
+    paddingTop: 30,
+    borderRadius: 2,
+  }
 });
