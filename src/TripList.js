@@ -41,7 +41,7 @@ export default class TripList extends React.Component {
               renderItem = {({item}) => (
                 <View style={styles.flatview} >
                   <TouchableOpacity
-                    onPress={onPress}>
+                    onPress={onPress.bind(this,item.name)}>
                     <Text>{item.name}</Text>
                     <Text>{item.id}</Text>
                     </TouchableOpacity>
@@ -55,10 +55,8 @@ export default class TripList extends React.Component {
   }
 }
 
-const onPress = () => {
-  Alert.alert(
-    'Hi'
-  )
+function onPress(string){
+  console.log(string)
 }
 
 
