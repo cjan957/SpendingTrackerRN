@@ -1,23 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, ListItem } from 'react-native';
+import { Alert, StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import { db } from './config';
-
-class MyListItem extends React.PureComponent {
-  _onPress = () => {
-    this.props.onPressItem(this.props.id);
-  };
-
-  render() {
-    const textColor = this.props.selected ? 'red' : 'black';
-    return (
-      <TouchableOpacity onPress={this._onPress}>
-        <View>
-          <Text style={{color: textColor}}>{this.props.title}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
 
 export default class TripList extends React.Component {
 
@@ -27,7 +10,6 @@ export default class TripList extends React.Component {
           username: 'chanokuporu',
           tripNameList: []
       }
-
   }
 
   componentDidMount(){
@@ -57,16 +39,26 @@ export default class TripList extends React.Component {
             <FlatList
               data={this.state.tripNameList}
               renderItem = {({item}) => (
-                <View >
-                  <Text>{item.name}</Text>
-                  <Text>{item.id}</Text>
+                <View style={styles.flatview} >
+                  <TouchableOpacity
+                    onPress={onPress}>
+                    <Text>{item.name}</Text>
+                    <Text>{item.id}</Text>
+                    </TouchableOpacity>
                 </View>
               )}
+              keyExtractor = {item => item.name}
             />
           </View>
       </View> 
     );
   }
+}
+
+const onPress = () => {
+  Alert.alert(
+    'Hi'
+  )
 }
 
 
