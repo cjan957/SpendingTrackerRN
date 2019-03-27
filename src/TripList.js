@@ -41,7 +41,7 @@ export default class TripList extends React.Component {
               renderItem = {({item}) => (
                 <View style={styles.flatview} >
                   <TouchableOpacity
-                    onPress={onPress.bind(this,item.name)}>
+                    onPress={onPress.bind(this,item)}>
                     <Text>{item.name}</Text>
                     <Text>{item.id}</Text>
                     </TouchableOpacity>
@@ -55,8 +55,9 @@ export default class TripList extends React.Component {
   }
 }
 
-function onPress(string){
-  console.log(string)
+function onPress(item){
+  console.log(item)
+  this.props.navigation.navigate('SpendingList', item)
 }
 
 
