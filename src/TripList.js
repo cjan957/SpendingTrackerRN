@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import { db } from './config';
 
 export default class TripList extends React.Component {
@@ -21,12 +21,12 @@ export default class TripList extends React.Component {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       var trip = {id: data.TripID, name: data.TripName};
+      console.log(trip)
       tripNameList.push(trip)
     });
     this.setState({
       tripNameList
     })
-    console.log(tripNameList);
   }
 
   render() {
@@ -56,7 +56,7 @@ export default class TripList extends React.Component {
 }
 
 function onPress(item){
-  console.log(item)
+  item.username = this.state.username;
   this.props.navigation.navigate('SpendingList', item)
 }
 
