@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { db } from './config';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -57,7 +57,19 @@ export default class SpendingList extends React.Component {
           color="#841584"
           accessibilityLabel="Filter by Food"
         />
-
+        <FlatList
+          data={this.state.spendingListDisplay}
+          renderItem = {({item}) => (
+            <View style={styles.flatview}>
+              <TouchableOpacity>
+                <Text>{item.Name}</Text>
+                <Text>{item.Category}</Text>
+                <Text>{item.Cost}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          keyExtractor = {item => item.Name}
+          />
       </View>
     );
   }
@@ -65,7 +77,6 @@ export default class SpendingList extends React.Component {
 
 function filterBy(category){
   console.log("Filtering by: " + category)
-  
 }
 
 
