@@ -10,12 +10,7 @@ export default class SpendingList extends React.Component {
       username: "",
       tripName: "",
       tripID: 0,
-      accomodation: [],
-      attraction: [],
-      flight: [],
-      food: [],
-      grocery: [],
-      localTransport: []
+      spendingList: []
     }
   }
 
@@ -25,14 +20,9 @@ export default class SpendingList extends React.Component {
     const tripID = navigation.getParam('id','0');
     const username = navigation.getParam('username','null');
 
-    const accom_path = username + "/" + tripID + "/Accomodation"
-    const attra_path = username + "/" + tripID + "/Attraction"
-    const fligt_path = username + "/" + tripID + "/Flight"
-    const food_path = username + "/" + tripID + "/Food"
-    const groce_path = username + "/" + tripID + "/Grocery"
-    const ltrans_path = username + "/" + tripID + "/LocalTransport"
-
-    db.collection(accom_path).onSnapshot(this.onCollectionUpdate);
+    const getSpendPath = username + "/" + tripID + "/spendinglist"
+ 
+    db.collection(getSpendPath).onSnapshot(this.onCollectionUpdate);
 
     this.setState({
       username,
@@ -42,16 +32,16 @@ export default class SpendingList extends React.Component {
   }
 
   onCollectionUpdate = (querySnapshot) => {
-    const accomodation = [];
+    const _spendingList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      var accom = {Cost: data.Cost, DateTime: data.DateTime};
-      accomodation.push(accom)
+      var spendingItem = {Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name,  TimeCreated: data.TimeCreated};
+      _spendingList.push(spendingItem)
     });
     this.setState({
-      accomodation
+      spendingList: _spendingList
     })
-    console.log(accomodation);
+    console.log(_spendingList);
   }
   
   render() {
