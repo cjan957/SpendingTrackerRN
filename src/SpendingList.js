@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { db } from './config';
+import { FlatList } from 'react-native-gesture-handler';
 
 export default class SpendingList extends React.Component {
   
@@ -10,7 +11,8 @@ export default class SpendingList extends React.Component {
       username: "",
       tripName: "",
       tripID: 0,
-      spendingList: []
+      spendingList: [],
+      spendingListDisplay: []
     }
   }
 
@@ -39,7 +41,8 @@ export default class SpendingList extends React.Component {
       _spendingList.push(spendingItem)
     });
     this.setState({
-      spendingList: _spendingList
+      spendingList: _spendingList,
+      spendingListDisplay: _spendingList
     })
     console.log(_spendingList);
   }
@@ -47,11 +50,22 @@ export default class SpendingList extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>SpendingList Page</Text>
-        <Text>TripName Selected: {this.state.tripName}</Text>
+        <Text>Your {this.state.tripName} Trip</Text>
+        <Button
+          onPress={filterBy.bind(this,"Food")}
+          title="Food"
+          color="#841584"
+          accessibilityLabel="Filter by Food"
+        />
+
       </View>
     );
   }
+}
+
+function filterBy(category){
+  console.log("Filtering by: " + category)
+  
 }
 
 
