@@ -52,7 +52,7 @@ export default class SpendingList extends React.Component {
       <View style={styles.container}>
         <Text>Your {this.state.tripName} Trip</Text>
         <Button
-          onPress={filterBy.bind(this,"Food")}
+          onPress={() => this.props.navigation.navigate('NewEntry')}
           title="Food"
           color="#841584"
           accessibilityLabel="Filter by Food"
@@ -62,6 +62,7 @@ export default class SpendingList extends React.Component {
           renderItem = {({item}) => (
             <View style={styles.flatview}>
               <TouchableOpacity>
+                <Text>{getDateTime(item.TimeCreated.seconds)}</Text> 
                 <Text>{item.Name}</Text>
                 <Text>{item.Category}</Text>
                 <Text>{item.Cost}</Text>
@@ -73,6 +74,12 @@ export default class SpendingList extends React.Component {
       </View>
     );
   }
+}
+
+function getDateTime(seconds){
+  var t = new Date(1970,0,1);
+  t.setSeconds(seconds);
+  console.log(t);
 }
 
 function filterBy(category){
