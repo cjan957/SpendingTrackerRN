@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import Category_Button from './Category_Button'
 
 export default class Form extends React.Component {
@@ -43,10 +43,16 @@ export default class Form extends React.Component {
                 <View style={styles.form_horizontal}>
                     <Category_Button/>
                 </View>
+                <View style={styles.form_horizontal}>
+                    <Button onPress={this.submitButton.bind(this)} title="Sumbit"/>
+                </View>
 
             </View>
           
         )
+    }
+    submitButton(){
+        console.log("submit clicked");
     }
 }
 
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     form_horizontal:{
       flex: 1, 
       flexDirection: 'row',
-      justifyContent: 'space-between'
+      justifyContent: 'center'
     },
     nameForm:{
       height: 30,
