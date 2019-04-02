@@ -36,8 +36,8 @@ export default class SpendingList extends React.Component {
   onCollectionUpdate = (querySnapshot) => {
     const _spendingList = [];
     querySnapshot.forEach((doc) => {
-      const data = doc.data().item;
-      var spendingItem = {Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name,  TimeCreated: data.TimeCreated};
+      const data = doc.data();
+      var spendingItem = {Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name, TimeCreated: data.TimeCreated};
       _spendingList.push(spendingItem)
     });
     this.setState({
@@ -58,9 +58,9 @@ export default class SpendingList extends React.Component {
         <Text>Your {this.state.tripName} Trip</Text>
         <Button
           onPress={() => this.props.navigation.navigate('NewEntry', info)}
-          title="Food"
+          title="Add New"
           color="#841584"
-          accessibilityLabel="Filter by Food"
+          accessibilityLabel="Add an Item"
         />
         <FlatList
           data={this.state.spendingListDisplay}

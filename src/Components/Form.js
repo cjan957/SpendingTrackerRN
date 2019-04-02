@@ -50,7 +50,7 @@ export default class Form extends React.Component {
                     <Category_Button/>
                 </View>
                 <View style={styles.form_horizontal}>
-                    <Button onPress={this.submitButton.bind(this)} title="Sumbit"/>
+                    <Button onPress={this.submitButton.bind(this)} title="Submit"/>
                 </View>
 
             </View>
@@ -95,7 +95,7 @@ export default class Form extends React.Component {
         if(this.state.invalid_cost){
             Alert.alert('Invalid cost', 'Please check the cost and try again')
         }
-        else if(item.Name == "" || item.Cost == ""){
+        else if(this.state.title == "" || this.state.cost == ""){
             Alert.alert('Empty Fields', 'Please make sure you have filled in all the required(*) fields')
         }
         else{
@@ -104,7 +104,11 @@ export default class Form extends React.Component {
             
             //Saving
             db.collection(getPathToAdd).doc().set({
-                item
+                Name: this.state.title,
+                Cost: this.state.cost,
+                Category: this.state.category,
+                Comment: this.state.comment,
+                TimeCreated: firebase.firestore.Timestamp.now()
             })
             .then(function(){
                 console.log("done successfully")
