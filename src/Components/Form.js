@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Alert, Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import Category_Button from './Category_Button'
 
 export default class Form extends React.Component {
@@ -10,6 +10,7 @@ export default class Form extends React.Component {
           title: "",
           cost: "",
           comment: "",
+          category: "",
           invalid_cost: false
         }
     }
@@ -18,7 +19,7 @@ export default class Form extends React.Component {
         return(
             <View>
                 <View style={styles.form_horizontal}>
-                    <Text>Title: </Text>
+                    <Text>*Title: </Text>
                     <TextInput
                         style={styles.nameForm}
                         onChangeText={(title) => this.setState({title})}
@@ -26,7 +27,7 @@ export default class Form extends React.Component {
                     />
                 </View>
                 <View style={styles.form_horizontal}>
-                    <Text>Cost: </Text>
+                    <Text>*Cost: </Text>
                     <TextInput
                         style={styles.nameForm}
                         onChangeText={(cost) => this.checkCostField({cost})}
@@ -81,6 +82,18 @@ export default class Form extends React.Component {
 
     submitButton(){
         console.log("submit clicked");
+        var item = {
+            Name: this.state.title,
+            Cost: this.state.cost,
+            Category: this.state.category,
+            Comment: this.state.comment
+        }
+        if(this.state.invalid_cost){
+            Alert.alert('Invalid cost', 'Please check the cost and try again')
+        }
+        else if(item.Name == "" || item.Cost == ""){
+            Alert.alert('Empty Fields', 'Please make sure you have filled in all the required(*) fields')
+        }
     }
 }
 
