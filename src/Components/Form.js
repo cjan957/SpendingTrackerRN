@@ -56,7 +56,16 @@ export default class Form extends React.Component {
 
     checkCostField(input){
         var cost = input.cost;
-        if(isNaN(cost) || cost <= 0){
+        console.log(typeof(cost))
+        console.log(cost)
+
+        if(cost == ""){
+            this.setState({
+                invalid_cost: false,
+                cost: ""
+            })
+        }
+        else if(isNaN(cost) || cost <= 0){
             this.setState({
                 invalid_cost: true,
                 cost: cost
@@ -64,7 +73,7 @@ export default class Form extends React.Component {
         }
         else{
             this.setState({
-                invalid_cost:false,
+                invalid_cost: false,
                 cost: cost
             })
         }
