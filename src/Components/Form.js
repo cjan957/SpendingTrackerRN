@@ -109,13 +109,14 @@ export default class Form extends React.Component {
             .then(function(){
                 console.log("done successfully")
             })
+            .then(this.popPage.bind(this))
             .catch(function(error){
                 console.log("error", error)
             })
         }
-
-
-
+    }
+    popPage = () => {
+        this.props.popper();
     }
 }
 

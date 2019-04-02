@@ -13,7 +13,7 @@ const AppNavigator = createStackNavigator(
     TripList,
     SpendingList,
     Settings,
-    NewEntry
+    NewEntry,
   },
   {
     initialRouteName: 'Login'
