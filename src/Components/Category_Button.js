@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SegmentedControlIOS } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import SegmentedControlTab from 'react-native-segmented-control-tab';
 
 export default class Category_Button extends React.Component {
 
@@ -18,15 +19,17 @@ export default class Category_Button extends React.Component {
     }
 
     render(){
+        let button
+        if(this.state.isPressed){
+            button = this.Selected()
+        }
+        else{
+            button = this.UnSelected()
+        }
         return(
-            <SegmentedControlIOS
-                values={["One", "Two"]}
-                tintColor="#841584"
-                selectedIndex={this.state.selectedIndex}
-                onChange={(event) => {
-                    this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
-                }}
-            />
+            <View>
+                {button}
+            </View>
         )
     }
 

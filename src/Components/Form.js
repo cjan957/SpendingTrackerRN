@@ -9,7 +9,8 @@ export default class Form extends React.Component {
         this.state = {
           title: "",
           cost: "",
-          comment: ""
+          comment: "",
+          invalid_cost: false
         }
     }
 
@@ -28,10 +29,11 @@ export default class Form extends React.Component {
                     <Text>Cost: </Text>
                     <TextInput
                         style={styles.nameForm}
-                        onChangeText={(cost) => this.setState({cost})}
+                        onChangeText={(cost) => this.checkCostField({cost})}
                         value={this.state.cost}
                     />
                 </View>
+                {this.state.invalid_cost && <Text>Invalid Cost</Text>}
                 <View style={styles.form_horizontal}>
                     <Text>Comment: </Text>
                     <TextInput
@@ -51,6 +53,23 @@ export default class Form extends React.Component {
           
         )
     }
+
+    checkCostField(input){
+        var cost = input.cost;
+        if(isNaN(cost) || cost <= 0){
+            this.setState({
+                invalid_cost: true,
+                cost: cost
+            })
+        }
+        else{
+            this.setState({
+                invalid_cost:false,
+                cost: cost
+            })
+        }
+    }
+
     submitButton(){
         console.log("submit clicked");
     }
