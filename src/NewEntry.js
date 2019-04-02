@@ -3,14 +3,36 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Form from './Components/Form';
 
 export default class NewEntry extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      tripID: "",
+      username: ""
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text>Add Item Page</Text>
-        <Form/>
+        <Form tripID={this.state.tripID} username={this.state.username}/>
       </View>
     );
   }
+
+  componentDidMount(){
+    const {navigation} = this.props;
+    const tripID = navigation.getParam('tripID', 'Invalid');
+    const username = navigation.getParam('username', 'Invalid');
+
+    this.setState({
+      tripID,
+      username
+    })
+
+  }
+
 }
 
 const styles = StyleSheet.create({

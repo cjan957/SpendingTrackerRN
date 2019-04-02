@@ -10,7 +10,7 @@ export default class SpendingList extends React.Component {
     this.state = {
       username: "",
       tripName: "",
-      tripID: 0,
+      tripID: "",
       spendingList: [],
       spendingListDisplay: []
     }
@@ -36,7 +36,7 @@ export default class SpendingList extends React.Component {
   onCollectionUpdate = (querySnapshot) => {
     const _spendingList = [];
     querySnapshot.forEach((doc) => {
-      const data = doc.data();
+      const data = doc.data().item;
       var spendingItem = {Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name,  TimeCreated: data.TimeCreated};
       _spendingList.push(spendingItem)
     });
@@ -48,11 +48,16 @@ export default class SpendingList extends React.Component {
   }
   
   render() {
+    var info = {
+      tripID: this.state.tripID,
+      username: this.state.username
+    }
+
     return (
       <View style={styles.container}>
         <Text>Your {this.state.tripName} Trip</Text>
         <Button
-          onPress={() => this.props.navigation.navigate('NewEntry')}
+          onPress={() => this.props.navigation.navigate('NewEntry', info)}
           title="Food"
           color="#841584"
           accessibilityLabel="Filter by Food"
@@ -79,7 +84,7 @@ export default class SpendingList extends React.Component {
 function getDateTime(seconds){
   var t = new Date(1970,0,1);
   t.setSeconds(seconds);
-  console.log(t);
+  return <Text>{t.toString()}</Text>;
 }
 
 function filterBy(category){
@@ -93,5 +98,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  flatview:{
+    margin: 10
   }
 });

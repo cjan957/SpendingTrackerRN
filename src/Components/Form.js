@@ -1,6 +1,9 @@
 import React from 'react';
 import { Alert, Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import Category_Button from './Category_Button'
+import { db } from '../config';
+const firebase = require("firebase");
+require("firebase/firestore");
 
 export default class Form extends React.Component {
 
@@ -86,7 +89,8 @@ export default class Form extends React.Component {
             Name: this.state.title,
             Cost: this.state.cost,
             Category: this.state.category,
-            Comment: this.state.comment
+            Comment: this.state.comment,
+            TimeCreated: firebase.firestore.Timestamp.now()
         }
         if(this.state.invalid_cost){
             Alert.alert('Invalid cost', 'Please check the cost and try again')
@@ -94,6 +98,24 @@ export default class Form extends React.Component {
         else if(item.Name == "" || item.Cost == ""){
             Alert.alert('Empty Fields', 'Please make sure you have filled in all the required(*) fields')
         }
+        else{
+            //Firestore path to save
+            const getPathToAdd = this.props.username + "/" + this.props.tripID + "/spendinglist"
+            
+            //Saving
+            db.collection(getPathToAdd).doc().set({
+                item
+            })
+            .then(function(){
+                console.log("done successfully")
+            })
+            .catch(function(error){
+                console.log("error", error)
+            })
+        }
+
+
+
     }
 }
 
