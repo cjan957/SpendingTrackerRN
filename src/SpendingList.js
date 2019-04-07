@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { db } from './config';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -47,6 +47,10 @@ export default class SpendingList extends React.Component {
     console.log(_spendingList);
   }
   
+  alert(data){
+    Alert.alert('Yay', 'You just long pressed. Well done' + data)
+  }
+
   render() {
     var info = {
       tripID: this.state.tripID,
@@ -66,7 +70,7 @@ export default class SpendingList extends React.Component {
           data={this.state.spendingListDisplay}
           renderItem = {({item}) => (
             <View style={styles.flatview}>
-              <TouchableOpacity>
+              <TouchableOpacity onLongPress={this.alert.bind(this,item)}>
                 <Text>{getDateTime(item.TimeCreated.seconds)}</Text> 
                 <Text>{item.Name}</Text>
                 <Text>{item.Category}</Text>
