@@ -12,7 +12,8 @@ export default class SpendingList extends React.Component {
       tripName: "",
       tripID: "",
       spendingList: [],
-      spendingListDisplay: []
+      spendingListDisplay: [],
+      totalCost: ""
     }
   }
 
@@ -34,16 +35,19 @@ export default class SpendingList extends React.Component {
   }
 
   onCollectionUpdate = (querySnapshot) => {
-    const _spendingList = [];
+    var _spendingList = [];
+    var _totalCost = 0;
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       const id = doc.id;
       var spendingItem = {ID: id, Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name, TimeCreated: data.TimeCreated};
-      _spendingList.push(spendingItem)
+      _totalCost += parseFloat(data.Cost);
+      _spendingList.push(spendingItem);
     });
     this.setState({
       spendingList: _spendingList,
-      spendingListDisplay: _spendingList
+      spendingListDisplay: _spendingList,
+      totalCost: _totalCost.toString(),
     })
   }
   
@@ -70,6 +74,7 @@ export default class SpendingList extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Your {this.state.tripName} Trip</Text>
+        <Text>Total: {this.state.totalCost} </Text>
         <Button
           onPress={() => this.props.navigation.navigate('NewEntry', info)}
           title="Add New"

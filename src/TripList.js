@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   TopGreetings: {
     flex: 1,
     backgroundColor: 'skyblue',
-    
   },
   MiddleTripList: {
     flex: 4,

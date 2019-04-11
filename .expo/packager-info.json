@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://3x-7bb.chanokuporu.spendingtracker.exp.direct",
-  "packagerNgrokUrl": "https://packager.3x-7bb.chanokuporu.spendingtracker.exp.direct",
-  "ngrokPid": 24710,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
