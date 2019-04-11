@@ -58,6 +58,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     margin: 10
-    
   },
 });

@@ -37,18 +37,28 @@ export default class SpendingList extends React.Component {
     const _spendingList = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      var spendingItem = {Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name, TimeCreated: data.TimeCreated};
+      const id = doc.id;
+      var spendingItem = {ID: id, Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name, TimeCreated: data.TimeCreated};
       _spendingList.push(spendingItem)
     });
     this.setState({
       spendingList: _spendingList,
       spendingListDisplay: _spendingList
     })
-    console.log(_spendingList);
   }
   
-  alert(data){
-    Alert.alert('Yay', 'You just long pressed. Well done' + data)
+  longpress(data){
+    console.log(data);
+    Alert.alert(
+      'Delete',
+      data.Name + '?',
+      [
+        {text: 'Cancel', onPress: () => console.log('not delete')},
+        {text: 'Delete', onPress: () => console.log('will delete'), style: 'destructive'}
+      ],
+      {cancelable: false},
+    );
+    
   }
 
   render() {
@@ -70,7 +80,7 @@ export default class SpendingList extends React.Component {
           data={this.state.spendingListDisplay}
           renderItem = {({item}) => (
             <View style={styles.flatview}>
-              <TouchableOpacity onLongPress={this.alert.bind(this,item)}>
+              <TouchableOpacity onLongPress={this.longpress.bind(this,item)}>
                 <Text>{getDateTime(item.TimeCreated.seconds)}</Text> 
                 <Text>{item.Name}</Text>
                 <Text>{item.Category}</Text>
@@ -90,11 +100,6 @@ function getDateTime(seconds){
   t.setSeconds(seconds);
   return <Text>{t.toString()}</Text>;
 }
-
-function filterBy(category){
-  console.log("Filtering by: " + category)
-}
-
 
 const styles = StyleSheet.create({
   container: {

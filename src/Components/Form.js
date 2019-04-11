@@ -60,8 +60,6 @@ export default class Form extends React.Component {
 
     checkCostField(input){
         var cost = input.cost;
-        console.log(typeof(cost))
-        console.log(cost)
 
         if(cost == ""){
             this.setState({
@@ -84,7 +82,6 @@ export default class Form extends React.Component {
     }
 
     submitButton(){
-        console.log("submit clicked");
         var item = {
             Name: this.state.title,
             Cost: this.state.cost,
