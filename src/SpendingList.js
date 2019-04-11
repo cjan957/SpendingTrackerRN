@@ -58,11 +58,19 @@ export default class SpendingList extends React.Component {
       data.Name + '?',
       [
         {text: 'Cancel', onPress: () => console.log('not delete')},
-        {text: 'Delete', onPress: () => console.log('will delete'), style: 'destructive'}
+        {text: 'Delete', onPress: () => this.deleteItem(data), style: 'destructive'}
       ],
       {cancelable: false},
     );
-    
+  }
+
+  deleteItem(itemID){
+    const getSpendPath = this.state.username + "/" + this.state.tripID + "/spendinglist"
+    db.collection(getSpendPath).doc(itemID.ID).delete().then(function(){
+      console.log("Document deleted!");
+    }).catch(function(error){
+      console.error("Error removing doc: ", error);
+    });
   }
 
   render() {
