@@ -35,6 +35,7 @@ export default class Form extends React.Component {
                         style={styles.nameForm}
                         onChangeText={(cost) => this.checkCostField({cost})}
                         value={this.state.cost}
+                        keyboardType = "numeric"
                     />
                 </View>
                 {this.state.invalid_cost && <Text>Invalid Cost</Text>}
