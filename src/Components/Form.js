@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Alert, Button, StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
 import Category_Button from './Category_Button'
 import { db } from '../config';
 const firebase = require("firebase");
@@ -10,23 +10,32 @@ export default class Form extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          title: "",
-          cost: "",
-          comment: "",
-          category: "",
-          invalid_cost: false
+          title: this.props.infoToEdit.name,
+          cost: this.props.infoToEdit.cost,
+          comment: this.props.infoToEdit.comment,
+          category: this.props.infoToEdit.category,
+          invalid_cost: false,
+          isEditExisting: false
         }
     }
 
     render(){
+        var buttonText;
+        if(this.props.infoToEdit.isEditExisting == true){
+            buttonText = <Button onPress={this.submitButton.bind(this)} title="Update"/>
+        }
+        else{
+            buttonText = <Button onPress={this.submitButton.bind(this)} title="Submit"/>
+        }
+
         return(
-            <View>
+            <ScrollView keyboardShouldPersistTaps='handled'>
                 <View style={styles.form_horizontal}>
                     <Text>*Title: </Text>
                     <TextInput
                         style={styles.nameForm}
                         onChangeText={(title) => this.setState({title})}
-                        value={this.state.title}
+                        value={this.props.title}
                     />
                 </View>
                 <View style={styles.form_horizontal}>
@@ -51,10 +60,10 @@ export default class Form extends React.Component {
                     <Category_Button/>
                 </View>
                 <View style={styles.form_horizontal}>
-                    <Button onPress={this.submitButton.bind(this)} title="Submit"/>
+                    {buttonText}
                 </View>
 
-            </View>
+            </ScrollView>
           
         )
     }

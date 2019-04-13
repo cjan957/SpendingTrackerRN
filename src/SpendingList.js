@@ -51,7 +51,7 @@ export default class SpendingList extends React.Component {
     })
   }
   
-  longpress(data){
+  longPress(data){
     console.log(data);
     Alert.alert(
       'Delete',
@@ -62,6 +62,20 @@ export default class SpendingList extends React.Component {
       ],
       {cancelable: false},
     );
+  }
+
+  itemPress(data){
+    var info = {
+      tripID: this.state.tripID,
+      username: this.state.username,
+      spendingID: data.ID,
+      name: data.Name,
+      cost: data.Cost,
+      comment: data.Comment,
+      category: data.Category,
+      isEditExisting: true
+    }
+    this.props.navigation.navigate('NewEntry', info)
   }
 
   deleteItem(itemID){
@@ -93,7 +107,7 @@ export default class SpendingList extends React.Component {
           data={this.state.spendingListDisplay}
           renderItem = {({item}) => (
             <View style={styles.flatview}>
-              <TouchableOpacity onLongPress={this.longpress.bind(this,item)}>
+              <TouchableOpacity onPress={this.itemPress.bind(this,item)} onLongPress={this.longPress.bind(this,item)}>
                 <Text>{getDateTime(item.TimeCreated.seconds)}</Text> 
                 <Text>{item.Name}</Text>
                 <Text>{item.Category}</Text>
