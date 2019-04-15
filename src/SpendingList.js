@@ -69,11 +69,6 @@ export default class SpendingList extends React.Component {
       tripID: this.state.tripID,
       username: this.state.username,
       spendingID: data.ID,
-      name: data.Name,
-      cost: data.Cost,
-      comment: data.Comment,
-      category: data.Category,
-      isEditExisting: true
     }
     this.props.navigation.navigate('NewEntry', info)
   }

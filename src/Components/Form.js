@@ -10,18 +10,39 @@ export default class Form extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-          title: this.props.infoToEdit.name,
-          cost: this.props.infoToEdit.cost,
-          comment: this.props.infoToEdit.comment,
-          category: this.props.infoToEdit.category,
+          name: "",
+          cost: "",
+          comment: "",
+          category: "",
           invalid_cost: false,
-          isEditExisting: false
+        }
+    }
+
+    componentDidMount(){
+        var spendingID = this.props.spendingID
+        var username = this.props.username
+        var tripID = this.props.tripID        
+        
+        //if spendingID does exist (from SpendingList->NewEntry), fetch spendingData from DB!
+        if(spendingID !== 'Invalid'){
+            const getSpendPath = username + "/" + tripID + "/spendinglist"
+            var docRef = db.collection(getSpendPath).doc(spendingID);
+            docRef.get().then(function(doc){
+                if(doc.exists){
+                    console.log('Document Data ' + doc.data())
+                }
+                else{
+                    console.log("No such document!");
+                }
+            }).catch(function(error){
+                console.log("error getting document" + spendingID + error)
+            });
         }
     }
 
     render(){
         var buttonText;
-        if(this.props.infoToEdit.isEditExisting == true){
+        if(this.props.spendingID !== 'Invalid'){
             buttonText = <Button onPress={this.submitButton.bind(this)} title="Update"/>
         }
         else{
@@ -34,8 +55,8 @@ export default class Form extends React.Component {
                     <Text>*Title: </Text>
                     <TextInput
                         style={styles.nameForm}
-                        onChangeText={(title) => this.setState({title})}
-                        value={this.props.title}
+                        onChangeText={(name) => this.setState({name})}
+                        value={this.state.name}
                     />
                 </View>
                 <View style={styles.form_horizontal}>
@@ -93,7 +114,7 @@ export default class Form extends React.Component {
 
     submitButton(){
         var item = {
-            Name: this.state.title,
+            Name: this.state.name,
             Cost: this.state.cost,
             Category: this.state.category,
             Comment: this.state.comment,
@@ -111,7 +132,7 @@ export default class Form extends React.Component {
             
             //Saving
             db.collection(getPathToAdd).doc().set({
-                Name: this.state.title,
+                Name: this.state.name,
                 Cost: this.state.cost,
                 Category: this.state.category,
                 Comment: this.state.comment,
