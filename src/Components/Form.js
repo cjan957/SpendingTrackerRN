@@ -15,6 +15,7 @@ export default class Form extends React.Component {
           comment: "",
           category: "",
           invalid_cost: false,
+          spendingID: ""
         }
     }
 
@@ -27,16 +28,22 @@ export default class Form extends React.Component {
         if(spendingID !== 'Invalid'){
             const getSpendPath = username + "/" + tripID + "/spendinglist"
             var docRef = db.collection(getSpendPath).doc(spendingID);
-            docRef.get().then(function(doc){
+            docRef.get().then((doc) => {
                 if(doc.exists){
                     const data = doc.data()
-                    console.log('Name of Item from db ' + data.Name)
+                    this.setState({
+                        name: data.Name,
+                        cost: data.Cost,
+                        comment: data.Comment,
+                        category: data.Category,
+                        spendingID: spendingID
+                    })
                 }
                 else{
                     console.log("No such document!");
                 }
             }).catch(function(error){
-                console.log("error getting document" + spendingID + error)
+                console.log("error getting document: " + spendingID + error)
             });
         }
     }
@@ -114,6 +121,7 @@ export default class Form extends React.Component {
     }
 
     submitButton(){
+
         var item = {
             Name: this.state.name,
             Cost: this.state.cost,
@@ -131,21 +139,42 @@ export default class Form extends React.Component {
             //Firestore path to save
             const getPathToAdd = this.props.username + "/" + this.props.tripID + "/spendinglist"
             
-            //Saving
-            db.collection(getPathToAdd).doc().set({
-                Name: this.state.name,
-                Cost: this.state.cost,
-                Category: this.state.category,
-                Comment: this.state.comment,
-                TimeCreated: firebase.firestore.Timestamp.now()
-            })
-            .then(function(){
-                console.log("done successfully")
-            })
-            .then(this.popPage.bind(this))
-            .catch(function(error){
-                console.log("error", error)
-            })
+             //Edit Entry
+            if(this.state.spendingID !== 'Invalid' && this.state.spendingID !== '')
+            {
+                //Saving
+                db.collection(getPathToAdd).doc(this.state.spendingID).set({
+                    Name: this.state.name,
+                    Cost: this.state.cost,
+                    Category: this.state.category,
+                    Comment: this.state.comment,
+                    TimeCreated: firebase.firestore.Timestamp.now()
+                })
+                .then(function(){
+                    console.log("edited successfully")
+                })
+                .then(this.popPage.bind(this))
+                .catch(function(error){
+                    console.log("error", error)
+                })
+            }
+            else{
+                //Saving
+                db.collection(getPathToAdd).doc().set({
+                    Name: this.state.name,
+                    Cost: this.state.cost,
+                    Category: this.state.category,
+                    Comment: this.state.comment,
+                    TimeCreated: firebase.firestore.Timestamp.now()
+                })
+                .then(function(){
+                    console.log("created successfully")
+                })
+                .then(this.popPage.bind(this))
+                .catch(function(error){
+                    console.log("error", error)
+                })
+            }   
         }
     }
     popPage = () => {
