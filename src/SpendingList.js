@@ -25,7 +25,7 @@ export default class SpendingList extends React.Component {
 
     const getSpendPath = username + "/" + tripID + "/spendinglist"
  
-    db.collection(getSpendPath).onSnapshot(this.onCollectionUpdate);
+    db.collection(getSpendPath).orderBy('TimeCreated').onSnapshot(this.onCollectionUpdate);
 
     this.setState({
       username,
@@ -46,7 +46,7 @@ export default class SpendingList extends React.Component {
     });
     this.setState({
       spendingList: _spendingList,
-      spendingListDisplay: _spendingList,
+      spendingListDisplay: _spendingList.reverse(),
       totalCost: _totalCost.toString(),
     })
   }
