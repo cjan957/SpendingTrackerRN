@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
+import { Alert, Button, StyleSheet, Text, Picker, View, ScrollView, TextInput } from 'react-native';
 import Category_Button from './Category_Button'
 import { db } from '../config';
 const firebase = require("firebase");
@@ -13,7 +13,7 @@ export default class Form extends React.Component {
           name: "",
           cost: "",
           comment: "",
-          category: "",
+          category: "Food",
           invalid_cost: false,
           spendingID: ""
         }
@@ -85,9 +85,19 @@ export default class Form extends React.Component {
                         value={this.state.comment}
                     />
                 </View>
-                <View style={styles.form_horizontal}>
-                    <Category_Button/>
-                </View>
+                    <Picker
+                        selectedValue={this.state.category}
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({category: itemValue})
+                        }>
+                        <Picker.Item label="Food" value="Food" />
+                        <Picker.Item label="Attraction" value="Attraction" />
+                        <Picker.Item label="Accomodation" value="Accomodation" />
+                        <Picker.Item label="Transport" value="Transport" />
+                        <Picker.Item label="Phone/Data" value="Phone/data" />
+                        <Picker.Item label="Gifts" value="Gifts" />
+                        <Picker.ITem label="Others" value="Others"/>
+                    </Picker>
                 <View style={styles.form_horizontal}>
                     {buttonText}
                 </View>
@@ -139,7 +149,7 @@ export default class Form extends React.Component {
             //Firestore path to save
             const getPathToAdd = this.props.username + "/" + this.props.tripID + "/spendinglist"
             
-             //Edit Entry
+            //Edit Entry
             if(this.state.spendingID !== 'Invalid' && this.state.spendingID !== '')
             {
                 //Saving
@@ -158,7 +168,7 @@ export default class Form extends React.Component {
                     console.log("error", error)
                 })
             }
-            else{
+            else{ //New Entry
                 //Saving
                 db.collection(getPathToAdd).doc().set({
                     Name: this.state.name,

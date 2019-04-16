@@ -32,10 +32,6 @@ export default class NewEntry extends React.Component {
     const username = navigation.getParam('username', 'Invalid');
     const spendingID = navigation.getParam('spendingID', 'Invalid');
 
-    // console.log("from newEntry tripID " + tripID)
-    // console.log("from newEntry username " + username)
-    // console.log("from newEntry spendingID " + spendingID)
-
     this.setState({
       tripID,
       username,
