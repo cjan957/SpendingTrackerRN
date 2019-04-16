@@ -26,11 +26,15 @@ export default class NewEntry extends React.Component {
     this.props.navigation.pop();
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const {navigation} = this.props;
     const tripID = navigation.getParam('tripID', 'Invalid');
     const username = navigation.getParam('username', 'Invalid');
     const spendingID = navigation.getParam('spendingID', 'Invalid');
+
+    // console.log("from newEntry tripID " + tripID)
+    // console.log("from newEntry username " + username)
+    // console.log("from newEntry spendingID " + spendingID)
 
     this.setState({
       tripID,

@@ -21,7 +21,7 @@ export default class Form extends React.Component {
     componentDidMount(){
         var spendingID = this.props.spendingID
         var username = this.props.username
-        var tripID = this.props.tripID        
+        var tripID = this.props.tripID     
         
         //if spendingID does exist (from SpendingList->NewEntry), fetch spendingData from DB!
         if(spendingID !== 'Invalid'){
@@ -29,7 +29,8 @@ export default class Form extends React.Component {
             var docRef = db.collection(getSpendPath).doc(spendingID);
             docRef.get().then(function(doc){
                 if(doc.exists){
-                    console.log('Document Data ' + doc.data())
+                    const data = doc.data()
+                    console.log('Name of Item from db ' + data.Name)
                 }
                 else{
                     console.log("No such document!");
