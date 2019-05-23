@@ -1,9 +1,9 @@
 import React from 'react';
 import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { db } from './config';
-import { FlatList } from 'react-native-gesture-handler';
+import SpendingList from './SpendingListPage/SpendingList';
 
-export default class SpendingList extends React.Component {
+export default class SpendingListPage extends React.Component {
   
   constructor(props){
     super(props);
@@ -94,24 +94,17 @@ export default class SpendingList extends React.Component {
         <Text>Total: {this.state.totalCost} </Text>
         <Button
           onPress={() => this.props.navigation.navigate('NewEntry', info)}
-          title="Add New"
-          color="#841584"
-          accessibilityLabel="Add an Item"
+          title= "Add New"
+          color= "#841584"
+          accessibilityLabel= "Add an Item"
         />
-        <FlatList
-          data={this.state.spendingListDisplay}
-          renderItem = {({item}) => (
-            <View style={styles.flatview}>
-              <TouchableOpacity onPress={this.itemPress.bind(this,item)} onLongPress={this.longPress.bind(this,item)}>
-                <Text>{getDateTime(item.TimeCreated.seconds)}</Text> 
-                <Text>{item.Name}</Text>
-                <Text>{item.Category}</Text>
-                <Text>{item.Cost}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          keyExtractor = {item => item.Name}
-          />
+
+        <SpendingList 
+          itemList={this.state.spendingListDisplay} 
+          tripID={this.state.tripID} 
+          username={this.state.username}
+          navigation={this.props.navigation}/>
+
       </View>
     );
   }
@@ -127,8 +120,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   flatview:{
     margin: 10

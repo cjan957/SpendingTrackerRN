@@ -57,7 +57,7 @@ export default class TripList extends React.Component {
 
 function onPress(item){
   item.username = this.state.username;
-  this.props.navigation.navigate('SpendingList', item)
+  this.props.navigation.navigate('SpendingListPage', item)
 }
 
 
