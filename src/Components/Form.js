@@ -15,7 +15,8 @@ export default class Form extends React.Component {
           comment: "",
           category: "Food",
           invalid_cost: false,
-          spendingID: ""
+          spendingID: "",
+          timeCreated: "",
         }
     }
 
@@ -36,7 +37,8 @@ export default class Form extends React.Component {
                         cost: data.Cost,
                         comment: data.Comment,
                         category: data.Category,
-                        spendingID: spendingID
+                        spendingID: spendingID,
+                        timeCreated: data.TimeCreated
                     })
                 }
                 else{
@@ -158,7 +160,7 @@ export default class Form extends React.Component {
                     Cost: this.state.cost,
                     Category: this.state.category,
                     Comment: this.state.comment,
-                    TimeCreated: firebase.firestore.Timestamp.now()
+                    TimeCreated: this.state.timeCreated,
                 })
                 .then(function(){
                     console.log("edited successfully")

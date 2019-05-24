@@ -1,17 +1,21 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity, Image, Button, TextInput } from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { db } from '../config';
 
 export default class SpendingItem extends React.Component {
     constructor(props){
-        super(props);
+        super(props); 
     }
 
     render(){
+        //Get path to icon for category
+        var iconSrc = this.getIconCategory(this.props.category);
+        
         return(
             <TouchableOpacity onPress = {this.itemPress.bind(this,this.props.item)}
                 onLongPress = {this.itemLongPress.bind(this,this.props.item)}>
                 <View style={styles.itemBox}>
+                    {iconSrc}
                     <View style={styles.TextContainer}>
                         <Text style={styles.title}>
                             {this.props.title}
@@ -28,6 +32,55 @@ export default class SpendingItem extends React.Component {
                 </View>
             </TouchableOpacity>
         );
+    }
+
+    getIconCategory(category){
+        var Component;
+        switch(category){
+            case "Accomodation":
+                Component =  <Image source={require('../../assets/Category/local_hotel.png')} style={styles.icon}/>
+                break;
+            case "Attraction":
+                Component =  <Image source={require('../../assets/Category/local_play.png')} style={styles.icon}/>
+                break;
+            case "Flight":
+                Component =  <Image source={require('../../assets/Category/outline_airplanemode_active.png')} style={styles.icon}/>
+                break;
+            case "Food":
+                Component =  <Image source={require('../../assets/Category/fastfood.png')} style={styles.icon}/>
+                break;
+            case "Gifts":
+                Component =  <Image source={require('../../assets/Category/card_giftcard.png')} style={styles.icon}/>
+                break;
+            case "Grocery":
+                Component =  <Image source={require('../../assets/Category/local_grocery_store.png')} style={styles.icon}/>
+                break;
+            case "Transport":
+                Component =  <Image source={require('../../assets/Category/local_taxi.png')} style={styles.icon}/>
+                break;
+            case "Phone/Data":
+                Component =  <Image source={require('../../assets/Category/smartphone.png')} style={styles.icon}/>
+                break;
+            case "Shopping":
+                Component =  <Image source={require('../../assets/Category/local_mall.png')} style={styles.icon}/>
+                break;
+            case "Other":
+                Component =  <Image source={require('../../assets/Category/trip_origin.png')} style={styles.icon}/>
+                break;
+            default:
+                Component =  <Image source={require('../../assets/Category/trip_origin.png')} style={styles.icon}/>
+                break;
+        }
+        return Component;
+    }
+
+    itemPress(data){
+        var itemPressedInfo = {
+            tripID: this.props.tripID,
+            username: this.props.username,
+            spendingID: data.ID,
+        }
+        this.props.navigation.navigate('NewEntry', itemPressedInfo);
     }
 
     itemLongPress(data){
@@ -50,17 +103,7 @@ export default class SpendingItem extends React.Component {
         }).catch(function(error){
           console.error("Error removing doc: ", error);
         });
-      }
-
-    itemPress(data){
-        var itemPressedInfo = {
-            tripID: this.props.tripID,
-            username: this.props.username,
-            spendingID: data.ID,
-        }
-        this.props.navigation.navigate('NewEntry', itemPressedInfo);
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -71,7 +114,7 @@ const styles = StyleSheet.create({
         marginLeft:15,
         marginRight:15,
         marginTop: 8,
-        marginBottom: 5,
+        marginBottom: 2,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#d6d7da',
@@ -100,9 +143,9 @@ const styles = StyleSheet.create({
     convertedCost:{
         fontSize: 10,
     },
-    photo:{
-        height: 50,
-        width: 50
+    icon:{
+        height: 35,
+        width: 35
     }
   });
 

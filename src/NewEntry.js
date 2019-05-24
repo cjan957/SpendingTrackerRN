@@ -17,7 +17,10 @@ export default class NewEntry extends React.Component {
       return (
         <View style={styles.container}>
           <Text>Add Item Page</Text>
-          <Form spendingID={this.state.spendingID} tripID={this.state.tripID} username={this.state.username} popper={this.popNavigation}/>
+          <Form spendingID={this.state.spendingID} 
+            tripID={this.state.tripID} 
+            username={this.state.username} 
+            popper={this.popNavigation}/>
         </View>
       ); 
   }
