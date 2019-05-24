@@ -64,7 +64,7 @@ export default class SpendingItem extends React.Component {
             case "Shopping":
                 Component =  <Image source={require('../../assets/Category/local_mall.png')} style={styles.icon}/>
                 break;
-            case "Other":
+            case "Others":
                 Component =  <Image source={require('../../assets/Category/trip_origin.png')} style={styles.icon}/>
                 break;
             default:
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     TextContainer:{
-        flex: 1,
+        flex: 2,
         flexDirection: 'column',
         marginLeft: 12,
     },

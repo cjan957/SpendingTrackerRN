@@ -92,12 +92,15 @@ export default class Form extends React.Component {
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({category: itemValue})
                         }>
-                        <Picker.Item label="Food" value="Food" />
-                        <Picker.Item label="Attraction" value="Attraction" />
                         <Picker.Item label="Accomodation" value="Accomodation" />
-                        <Picker.Item label="Transport" value="Transport" />
-                        <Picker.Item label="Phone/Data" value="Phone/data" />
+                        <Picker.Item label="Attraction" value="Attraction" />
+                        <Picker.Item label="Flight" value="Flight" />
+                        <Picker.Item label="Food" value="Food" />
                         <Picker.Item label="Gifts" value="Gifts" />
+                        <Picker.Item label="Grocery" value="Grocery" />
+                        <Picker.Item label="Transport" value="Transport" />
+                        <Picker.Item label="Phone/Data" value="Phone/Data" />
+                        <Picker.Item label="Shopping" value="Shopping" />
                         <Picker.ITem label="Others" value="Others"/>
                     </Picker>
                 <View style={styles.form_horizontal}>
