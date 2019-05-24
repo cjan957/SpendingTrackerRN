@@ -61,21 +61,28 @@ export default class SpendingListPage extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>Your {this.state.tripName} Trip</Text>
-        <Text>Total: {this.state.totalCost} </Text>
+        <View style={styles.tripInfoBlock}>
+          <View style={styles.tripInfoText}>
+            <Text style={styles.textTripTitle}>{this.state.tripName} Trip</Text>
+            <Text style={styles.textTripTotle}>Total: ${this.state.totalCost} </Text>
+           
+          </View>
+        </View>
+        <View style={styles.spendListBlock}>
         <Button
-          onPress={() => this.props.navigation.navigate('NewEntry', info)}
-          title= "Add New"
-          color= "#841584"
-          accessibilityLabel= "Add an Item"
-        />
+              onPress={() => this.props.navigation.navigate('NewEntry', info)}
+              title= "Add New"
+              color= "#841584"
+              accessibilityLabel= "Add an Item"/>
+          <SpendingList 
+            itemList={this.state.spendingListDisplay} 
+            tripID={this.state.tripID} 
+            username={this.state.username}
+            navigation={this.props.navigation}/>
+        </View>
+        
 
-        <SpendingList 
-          itemList={this.state.spendingListDisplay} 
-          tripID={this.state.tripID} 
-          username={this.state.username}
-          navigation={this.props.navigation}/>
-
+        
       </View>
     );
   }
@@ -85,7 +92,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-
+  },
+  tripInfoBlock:{
+    flex: 1,
+    backgroundColor: 'skyblue',
+    justifyContent: 'center'
+  },
+  tripInfoText:{
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textTripTitle:{
+    fontSize: 25,
+    color: 'white'
+  },
+  textTripTotle:{
+    fontSize: 20,
+    color: 'white'
+  },
+  spendListBlock:{
+    flex: 4
   },
   flatview:{
     margin: 10
