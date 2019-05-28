@@ -101,7 +101,7 @@ export default class Form extends React.Component {
                         <Picker.Item label="Transport" value="Transport" />
                         <Picker.Item label="Phone/Data" value="Phone/Data" />
                         <Picker.Item label="Shopping" value="Shopping" />
-                        <Picker.ITem label="Others" value="Others"/>
+                        <Picker.Item label="Others" value="Others"/>
                     </Picker>
                 <View style={styles.form_horizontal}>
                     {buttonText}

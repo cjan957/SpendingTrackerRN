@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, SectionList, StyleSheet, Text } from 'react-native';
 import SpendingItem from './SpendingItem';
 
 const styles = StyleSheet.create({
@@ -11,7 +11,25 @@ const styles = StyleSheet.create({
 
 const SpendingList = ({ itemList, tripID, username, navigation }) => (
     <View style={styles.container}>
-        <FlatList
+        <SectionList
+            sections={itemList}
+            renderItem={({ item }) => 
+                <SpendingItem 
+                    item = {item}
+                    title = {item.Name}
+                    category={item.Category}
+                    note={item.Comment}
+                    cost={item.Cost}
+                    tripID = {tripID}
+                    username = {username}
+                    navigation = {navigation}/>}
+            renderSectionHeader={({ section }) => 
+                <Text>{section.title}</Text>
+            }
+            keyExtractor = {item => item.ID}
+        />
+
+        {/* <FlatList
                 data={itemList}
                 renderItem={({ item }) => 
                 <SpendingItem
@@ -25,7 +43,7 @@ const SpendingList = ({ itemList, tripID, username, navigation }) => (
                     navigation = {navigation}
                 />}
                 keyExtractor = {item => item.ID}
-        />
+        /> */}
     </View>
 );
 

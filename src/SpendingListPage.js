@@ -13,6 +13,7 @@ export default class SpendingListPage extends React.Component {
       tripID: "",
       spendingList: [],
       spendingListDisplay: [],
+      spendingListGroupByDate: [],
       totalCost: ""
     }
   }
@@ -37,6 +38,7 @@ export default class SpendingListPage extends React.Component {
   onCollectionUpdate = (querySnapshot) => {
     var _spendingList = [];
     var _totalCost = 0;
+    var listSection
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
@@ -51,6 +53,42 @@ export default class SpendingListPage extends React.Component {
       spendingListDisplay: _spendingList.reverse(),
       totalCost: _totalCost.toString(),
     })
+
+    //var spendingListSectioning = this.state.spendingListDisplay.sort((a,b) => a.TimeCreated.seconds < b.TimeCreated.seconds ? -1 : 1)
+    //console.log(this.state.spendingListDisplay);
+    var convertedTime = [];
+    _spendingList.reverse();
+    _spendingList.forEach((item) => {
+      convertedTime.push(getDateTime(item.TimeCreated.seconds));
+      
+    })
+    
+    //Get a list of {title: '12/3, data: []}
+    const dayMonth = Array.from(new Set(convertedTime.map(k => k.split('/')[1] + "/" + k.split('/')[0])));
+    var sectionDataList = []
+    dayMonth.forEach(k => {
+      var sectionListObject = {title: k, data: []}
+      sectionDataList.push(sectionListObject);
+    });
+
+  
+    //Group each Date/Month
+    convertedTime.forEach(function(k, index){
+      const dayMonth = k.split('/')[1] + "/" + k.split('/')[0];
+      const actualData = _spendingList[index]
+      sectionDataList.forEach(item => {
+        if(item.title = dayMonth){
+          item.data.push(actualData);
+        }
+      })
+    })
+
+    this.setState({
+      spendingListGroupByDate: sectionDataList,
+    })
+
+    console.log(this.state.spendingListGroupByDate);
+
   }
 
   render() {
@@ -75,7 +113,7 @@ export default class SpendingListPage extends React.Component {
               color= "#841584"
               accessibilityLabel= "Add an Item"/>
           <SpendingList 
-            itemList={this.state.spendingListDisplay} 
+            itemList={this.state.spendingListGroupByDate} 
             tripID={this.state.tripID} 
             username={this.state.username}
             navigation={this.props.navigation}/>
@@ -86,6 +124,11 @@ export default class SpendingListPage extends React.Component {
       </View>
     );
   }
+}
+
+function getDateTime(seconds){
+  var myDate = new Date(seconds * 1000);
+  return myDate.toLocaleString();
 }
 
 const styles = StyleSheet.create({
