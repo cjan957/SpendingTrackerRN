@@ -97,8 +97,7 @@ export default class SpendingListPage extends React.Component {
         <View style={styles.tripInfoBlock}>
           <View style={styles.tripInfoText}>
             <Text style={styles.textTripTitle}>{this.state.tripName} Trip</Text>
-            <Text style={styles.textTripTotle}>Total: ${this.state.totalCost} </Text>
-           
+            <Text style={styles.textTripTotle}>Total: ${this.state.totalCost}</Text>
           </View>
         </View>
         <View style={styles.spendListBlock}>
@@ -113,9 +112,6 @@ export default class SpendingListPage extends React.Component {
             username={this.state.username}
             navigation={this.props.navigation}/>
         </View>
-        
-
-        
       </View>
     );
   }

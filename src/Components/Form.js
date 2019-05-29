@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Button, StyleSheet, Text, Picker, View, ScrollView, TextInput } from 'react-native';
-import Category_Button from './Category_Button'
+import RadioOptions from '../FormPage/RadioOptions'
 import { db } from '../config';
 const firebase = require("firebase");
 require("firebase/firestore");
@@ -87,22 +87,12 @@ export default class Form extends React.Component {
                         value={this.state.comment}
                     />
                 </View>
-                    <Picker
-                        selectedValue={this.state.category}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({category: itemValue})
-                        }>
-                        <Picker.Item label="Accomodation" value="Accomodation" />
-                        <Picker.Item label="Attraction" value="Attraction" />
-                        <Picker.Item label="Flight" value="Flight" />
-                        <Picker.Item label="Food" value="Food" />
-                        <Picker.Item label="Gifts" value="Gifts" />
-                        <Picker.Item label="Grocery" value="Grocery" />
-                        <Picker.Item label="Transport" value="Transport" />
-                        <Picker.Item label="Phone/Data" value="Phone/Data" />
-                        <Picker.Item label="Shopping" value="Shopping" />
-                        <Picker.Item label="Others" value="Others"/>
-                    </Picker>
+                    <RadioOptions 
+                        options={['Accomodation', 'Attraction', 'Flight', 'Food', 'Gifts', 'Grocery', 'Transport', 'Phone/Data', 'Shopping', 'Others']}
+                        onChange={(option) => {
+                            console.log(option);
+                        }}
+                    />    
                 <View style={styles.form_horizontal}>
                     {buttonText}
                 </View>
