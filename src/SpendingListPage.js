@@ -11,8 +11,6 @@ export default class SpendingListPage extends React.Component {
       username: "",
       tripName: "",
       tripID: "",
-      spendingList: [],
-      spendingListDisplay: [],
       spendingListGroupByDate: [],
       totalCost: ""
     }
@@ -20,14 +18,18 @@ export default class SpendingListPage extends React.Component {
 
   componentDidMount(){
     const {navigation} = this.props;
+
+    //Get tripName, ID, Username from the TripList Page
     const tripName = navigation.getParam('name', 'Invalid');
     const tripID = navigation.getParam('id','0');
     const username = navigation.getParam('username','null');
 
+    //Access Firebase to check items stored for this User/TripID, 
+    //call this.onCollectionUpdate when there's a change
     const getSpendPath = username + "/" + tripID + "/spendinglist"
- 
     db.collection(getSpendPath).orderBy('TimeCreated').onSnapshot(this.onCollectionUpdate);
 
+    //Save as State
     this.setState({
       username,
       tripName,
@@ -37,58 +39,50 @@ export default class SpendingListPage extends React.Component {
 
   onCollectionUpdate = (querySnapshot) => {
     var _spendingList = [];
+    var _convertedTime = [];
+    var _sectionDataList = []
     var _totalCost = 0;
-    var listSection
 
+    //Read the snapshot (all the entries on FB), then save it to _spendingList
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      const id = doc.id;
-      var spendingItem = {ID: id, Category: data.Category, Comment: data.Comment, Cost: data.Cost, Name: data.Name, TimeCreated: data.TimeCreated};
-      _totalCost += parseFloat(data.Cost);
+      var spendingItem = {
+        ID: doc.id, 
+        Category: data.Category, 
+        Comment: data.Comment, 
+        Cost: data.Cost, 
+        Name: data.Name, 
+        TimeCreated: data.TimeCreated
+      };
       _spendingList.push(spendingItem);
+      _convertedTime.push(getDateTime(spendingItem.TimeCreated.seconds))
+      //Calculate the total cost OTG
+      _totalCost += parseFloat(data.Cost);
     });
 
-    this.setState({
-      spendingList: _spendingList,
-      spendingListDisplay: _spendingList.reverse(),
-      totalCost: _totalCost.toString(),
-    })
-
-    //var spendingListSectioning = this.state.spendingListDisplay.sort((a,b) => a.TimeCreated.seconds < b.TimeCreated.seconds ? -1 : 1)
-    //console.log(this.state.spendingListDisplay);
-    var convertedTime = [];
-    _spendingList.reverse();
-    _spendingList.forEach((item) => {
-      convertedTime.push(getDateTime(item.TimeCreated.seconds));
-      
-    })
-    
     //Get a list of {title: '12/3, data: []}
-    const dayMonth = Array.from(new Set(convertedTime.map(k => k.split('/')[1] + "/" + k.split('/')[0])));
-    var sectionDataList = []
-    dayMonth.forEach(k => {
+    const AllDayMonth = Array.from(_convertedTime.map(k => k.split('/')[1] + "/" + k.split('/')[0]));
+    const UniqueDayMonth = Array.from(new Set(AllDayMonth));
+
+    UniqueDayMonth.forEach(k => {
       var sectionListObject = {title: k, data: []}
-      sectionDataList.push(sectionListObject);
+      _sectionDataList.push(sectionListObject);
     });
 
-  
-    //Group each Date/Month
-    convertedTime.forEach(function(k, index){
-      const dayMonth = k.split('/')[1] + "/" + k.split('/')[0];
-      const actualData = _spendingList[index]
-      sectionDataList.forEach(item => {
-        if(item.title = dayMonth){
-          item.data.push(actualData);
+    _spendingList.forEach(function(k, index){
+      _sectionDataList.forEach(item => {
+        if(item.title == AllDayMonth[index]){
+          item.data.push(k);
         }
       })
     })
 
     this.setState({
-      spendingListGroupByDate: sectionDataList,
+      totalCost: _totalCost,
+      spendingListGroupByDate: _sectionDataList.reverse(),
     })
 
-    console.log(this.state.spendingListGroupByDate);
-
+    console.log(_sectionDataList);
   }
 
   render() {

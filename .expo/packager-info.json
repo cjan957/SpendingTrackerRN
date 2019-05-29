@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://ub-8ku.anonymous.spendingtrackerrn.exp.direct",
-  "packagerNgrokUrl": "https://packager.ub-8ku.anonymous.spendingtrackerrn.exp.direct",
-  "ngrokPid": 23814,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
