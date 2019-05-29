@@ -56,6 +56,7 @@ export default class SpendingListPage extends React.Component {
       };
       _spendingList.push(spendingItem);
       _convertedTime.push(getDateTime(spendingItem.TimeCreated.seconds))
+      
       //Calculate the total cost OTG
       _totalCost += parseFloat(data.Cost);
     });

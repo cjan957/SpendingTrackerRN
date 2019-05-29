@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    sectionHeader:{
+        fontSize: 10,
+        padding: 5
+    }
 });
 
 const SpendingList = ({ itemList, tripID, username, navigation }) => (
@@ -24,7 +28,7 @@ const SpendingList = ({ itemList, tripID, username, navigation }) => (
                     username = {username}
                     navigation = {navigation}/>}
             renderSectionHeader={({ section }) => 
-                <Text>{section.title}</Text>
+                <Text styles={styles.sectionHeader}>{section.title}</Text>
             }
             keyExtractor = {item => item.ID}
         />
