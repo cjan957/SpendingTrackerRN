@@ -10,6 +10,7 @@ export default class NewEntry extends React.Component {
       tripID: "",
       username: "",
       spendingID: "",
+      category: "",
     }
   }
 
@@ -20,6 +21,7 @@ export default class NewEntry extends React.Component {
           <Form spendingID={this.state.spendingID} 
             tripID={this.state.tripID} 
             username={this.state.username} 
+            category={this.state.category}
             popper={this.popNavigation}/>
         </View>
       ); 
@@ -34,11 +36,13 @@ export default class NewEntry extends React.Component {
     const tripID = navigation.getParam('tripID', 'Invalid');
     const username = navigation.getParam('username', 'Invalid');
     const spendingID = navigation.getParam('spendingID', 'Invalid');
+    const category = navigation.getParam('category', 'Invalid');
 
     this.setState({
       tripID,
       username,
       spendingID,
+      category
     })
   }
 }

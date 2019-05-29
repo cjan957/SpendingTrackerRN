@@ -13,14 +13,14 @@ export default class Form extends React.Component {
           name: "",
           cost: "",
           comment: "",
-          category: "Food",
+          category: this.props.category,
           invalid_cost: false,
           spendingID: "",
           timeCreated: "",
         }
     }
 
-    componentDidMount(){
+    componentWillMount(){
         var spendingID = this.props.spendingID
         var username = this.props.username
         var tripID = this.props.tripID     
@@ -89,10 +89,11 @@ export default class Form extends React.Component {
                 </View>
                     <RadioOptions 
                         options={['Accomodation', 'Attraction', 'Flight', 'Food', 'Gifts', 'Grocery', 'Transport', 'Phone/Data', 'Shopping', 'Others']}
+                        selectedValue={this.state.category}
                         onChange={(option) => {
-                            console.log(option);
+                            this.setState({category: option})
                         }}
-                    />    
+                    />  
                 <View style={styles.form_horizontal}>
                     {buttonText}
                 </View>

@@ -79,6 +79,7 @@ export default class SpendingItem extends React.Component {
             tripID: this.props.tripID,
             username: this.props.username,
             spendingID: data.ID,
+            category: data.Category
         }
         this.props.navigation.navigate('NewEntry', itemPressedInfo);
     }

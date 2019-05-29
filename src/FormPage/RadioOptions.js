@@ -5,9 +5,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 export default class RadioOptions extends React.Component {
     constructor(props){
         super(props);
-        this.state ={
-            activeOption: this.props.options[0],
+        this.state = {
+            activeOption: this.props.selectedValue,
         };
+        console.log(this.state.activeOption)
     };
 
     updateActiveOption = (activeOption) => {
@@ -20,18 +21,18 @@ export default class RadioOptions extends React.Component {
         return (
             <View style={styles.mainView}>
                 {this.props.options.map((option, index) => (
-                <TouchableOpacity key={option} onPress={() => {
-                    this.props.onChange(option);
-                    this.updateActiveOption(option);
-                    }}>
-                    <Text style={{
-                        width: 150,
-                        borderWidth: 1,
-                        height: 50,
-                        color: this.state.activeOption === option ? 'red' : 'black',}}>
-                        {option}
-                    </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity key={option} onPress={() => {
+                        this.props.onChange(option);
+                        this.updateActiveOption(option);
+                        }}>
+                        <Text style={{
+                            width: 150,
+                            borderWidth: 1,
+                            height: 50,
+                            color: this.state.activeOption === option ? 'blue' : 'black',}}>
+                            {option}
+                        </Text>
+                    </TouchableOpacity>
                 ))}
         </View>
         );
